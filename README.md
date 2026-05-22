@@ -7,8 +7,8 @@ Firemní web Artewu s.r.o. — truhlářství a vývoj software. Postavený na *
 ```text
 /
 ├── _server/                      # konfigurace webserverů pro deploy
-│   ├── nginx/artewu.cz.conf
-│   └── apache/artewu.cz.conf
+│   ├── nginx/artewu.com.conf
+│   └── apache/artewu.com.conf
 ├── bin/
 │   └── deploy.sh                 # deploy skript (nginx/apache detekce)
 ├── public/                       # statika kopírovaná 1:1 (favicon apod.)
@@ -101,8 +101,8 @@ Předpokládá se, že na serveru je `nginx` **nebo** `apache2` (skript si detek
 ```bash
 # 1. checkout do /srv/www
 cd /srv/www
-git clone <repo-url> artewu.cz
-cd artewu.cz
+git clone <repo-url> artewu.com
+cd artewu.com
 
 # 2. závislosti + build
 pnpm install
@@ -116,7 +116,7 @@ Co skript [bin/deploy.sh](bin/deploy.sh) udělá:
 
 1. Ověří existenci `dist/index.html`.
 2. Detekuje webserver podle `/etc/nginx/sites-available` nebo `/etc/apache2/sites-available`.
-3. Vezme `_server/<nginx|apache>/artewu.cz.conf`, nahradí v něm `__WEBROOT__` skutečnou cestou k `dist/` a zapíše do `sites-available/`.
+3. Vezme `_server/<nginx|apache>/artewu.com.conf`, nahradí v něm `__WEBROOT__` skutečnou cestou k `dist/` a zapíše do `sites-available/`.
 4. Předchozí verzi zazálohuje jako `*.bak.<timestamp>`.
 5. Vytvoří/aktualizuje symlink v `sites-enabled/`.
 6. Otestuje syntaxi (`nginx -t` / `apache2ctl configtest`).
@@ -135,9 +135,9 @@ Po prvním nasazení (config zatím poslouchá jen na portu 80):
 
 ```bash
 # nginx
-sudo certbot --nginx -d artewu.cz -d www.artewu.cz
+sudo certbot --nginx -d artewu.com -d www.artewu.com
 # nebo apache
-sudo certbot --apache -d artewu.cz -d www.artewu.cz
+sudo certbot --apache -d artewu.com -d www.artewu.com
 ```
 
 Certbot si konfigurák sám upraví a obnovu si zařídí systémovým timerem.
@@ -145,7 +145,7 @@ Certbot si konfigurák sám upraví a obnovu si zařídí systémovým timerem.
 ### Aktualizace obsahu (běžný redeploy)
 
 ```bash
-cd /srv/www/artewu.cz
+cd /srv/www/artewu
 git pull
 pnpm install   # jen pokud se měnily závislosti
 pnpm build

@@ -3,7 +3,7 @@
 # bin/deploy.sh
 #
 # Detekuje, zda na stroji běží nginx nebo Apache, nakopíruje příslušný
-# konfigurák z _server/<server>/artewu.cz.conf do sites-available,
+# konfigurák z _server/<server>/artewu.com.conf do sites-available,
 # vytvoří symlink do sites-enabled, otestuje syntaxi a reloadne službu.
 #
 # V konfiguráku se token __WEBROOT__ nahrazuje skutečnou cestou
@@ -15,7 +15,7 @@
 
 set -euo pipefail
 
-SITE="artewu.cz"
+SITE="artewu.com"
 CONFIG_NAME="${SITE}.conf"
 
 # Cesty
