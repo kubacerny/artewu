@@ -1,0 +1,124 @@
+---
+import Layout from '../layouts/Layout.astro';
+import BlogCard from '../components/BlogCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => data.category === 'software'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 6);
+
+const services = [
+  {
+    title: 'Webové aplikace',
+    desc: 'Interní portály, dashboardy a&nbsp;nástroje šité na míru vašemu workflow.',
+    icon: 'M3 7l9 6 9-6M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7M3 7l9-4 9 4',
+  },
+  {
+    title: 'E-shopy',
+    desc: 'Rychlé statické e-shopy s napojením na platby, sklad a&nbsp;účetnictví.',
+    icon: 'M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293A1 1 0 005.414 17H17M9 21h.01M19 21h.01',
+  },
+  {
+    title: 'Integrace a API',
+    desc: 'Napojení na&nbsp;Pohodu, FastCentrik, ABRA, Zásilkovnu i&nbsp;exotičtější systémy.',
+    icon: 'M8 9l-4 3 4 3M16 9l4 3-4 3M14 4l-4 16',
+  },
+  {
+    title: 'Webové prezentace',
+    desc: 'Firemní weby, které načítají rychle a vypadají jako vaše firma — ne jako šablona.',
+    icon: 'M4 5h16M4 12h16M4 19h7',
+  },
+  {
+    title: 'Konzultace a audity',
+    desc: 'Druhý názor na architekturu, výkon nebo bezpečnost vašeho existujícího řešení.',
+    icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622',
+  },
+  {
+    title: 'Provoz a podpora',
+    desc: 'Hosting, zálohy, monitoring a&nbsp;dlouhodobá údržba — aby vám nic nespadlo.',
+    icon: 'M5 13l4 4L19 7',
+  },
+];
+
+const stack = [
+  'TypeScript', 'Astro', 'React', 'Node.js', 'Fastify', 'Prisma',
+  'PostgreSQL', 'TailwindCSS', 'Stripe', 'Docker', 'GitHub Actions',
+];
+---
+
+<Layout title="Vývoj software — Artewu s.r.o.">
+  <section class="relative bg-gradient-to-br from-brand-100 via-brand-50 to-white">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24">
+      <div class="max-w-3xl">
+        <p class="text-sm font-medium tracking-wider uppercase text-brand-600 mb-3">Vývoj software</p>
+        <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-brand-900 leading-tight mb-5">
+          Aplikace, které pracují za vás.
+        </h1>
+        <p class="text-lg text-brand-800 leading-relaxed">
+          Stavíme webové aplikace, e-shopy a&nbsp;interní nástroje pro firmy,
+          které chtějí mít procesy v&nbsp;jednom místě — a&nbsp;ne v&nbsp;tabulkách Excelu.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cards: Co děláme -->
+  <section class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+    <h2 class="font-serif text-3xl text-brand-900 mb-10 text-center">Co děláme</h2>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {services.map((s) => (
+        <article class="bg-white rounded-2xl p-6 border border-brand-100 hover:shadow-md transition-shadow">
+          <div class="w-10 h-10 rounded-lg bg-brand-100 flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-brand-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d={s.icon} />
+            </svg>
+          </div>
+          <h3 class="font-serif text-xl text-brand-900 mb-2" set:html={s.title} />
+          <p class="text-sm text-brand-700 leading-relaxed" set:html={s.desc} />
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- Stack -->
+  <section class="bg-brand-100/40 py-16">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div class="max-w-2xl mb-8">
+        <h2 class="font-serif text-3xl text-brand-900 mb-3">Technologie, které máme rádi</h2>
+        <p class="text-brand-700 leading-relaxed">
+          Sázíme na osvědčený, ale moderní stack — žádné experimenty na produkci klientů.
+        </p>
+      </div>
+      <ul class="flex flex-wrap gap-2">
+        {stack.map((tech) => (
+          <li class="px-3 py-1.5 bg-white border border-brand-200 rounded-full text-sm text-brand-800">
+            {tech}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Vybrané reference -->
+  {posts.length > 0 && (
+    <section class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+      <div class="flex items-end justify-between mb-10">
+        <h2 class="font-serif text-3xl text-brand-900">Vybrané projekty</h2>
+        <a href="/blog" class="text-brand-600 hover:text-brand-800 font-medium">Všechny →</a>
+      </div>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {posts.map((post) => (
+          <BlogCard
+            href={`/blog/${post.id}`}
+            title={post.data.title}
+            description={post.data.description}
+            date={post.data.date}
+            category={post.data.category}
+            cover={post.data.cover}
+          />
+        ))}
+      </div>
+    </section>
+  )}
+</Layout>

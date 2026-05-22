@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-50: #faf7f2;
+  --color-brand-100: #f1e9da;
+  --color-brand-200: #e2d2b3;
+  --color-brand-300: #cdb084;
+  --color-brand-400: #b88f5d;
+  --color-brand-500: #a3754a;
+  --color-brand-600: #8a5d3c;
+  --color-brand-700: #6e4830;
+  --color-brand-800: #4d3322;
+  --color-brand-900: #2e1f15;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Fraunces", ui-serif, Georgia, serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-brand-50 text-brand-900 font-sans antialiased;
+}
+
+h1, h2, h3, h4 {
+  @apply font-serif tracking-tight;
+}
+
+.prose-artewu :where(h2) {
+  @apply font-serif text-3xl mt-10 mb-4;
+}
+.prose-artewu :where(h3) {
+  @apply font-serif text-2xl mt-8 mb-3;
+}
+.prose-artewu :where(p) {
+  @apply leading-relaxed my-4 text-brand-800;
+}
+.prose-artewu :where(img) {
+  @apply rounded-xl shadow-md my-6 w-full;
+}
+.prose-artewu :where(ul) {
+  @apply list-disc pl-6 my-4 space-y-1;
+}
+.prose-artewu :where(a) {
+  @apply text-brand-600 underline underline-offset-2 hover:text-brand-800;
+}

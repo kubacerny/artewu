@@ -1,0 +1,73 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Kontakt — Artewu s.r.o.">
+  <section class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+    <header class="mb-12">
+      <p class="text-sm font-medium tracking-wider uppercase text-brand-600 mb-3">Kontakt</p>
+      <h1 class="font-serif text-4xl sm:text-5xl text-brand-900 mb-4">Ozvěte se</h1>
+      <p class="text-lg text-brand-700 leading-relaxed max-w-2xl">
+        Nejjednodušší je napsat e-mail nebo zavolat. Odpovídáme obvykle do&nbsp;druhého
+        pracovního dne. První konzultace je nezávazná a&nbsp;zdarma.
+      </p>
+    </header>
+
+    <div class="grid gap-6 md:grid-cols-2">
+      <a
+        href="mailto:kuba@artewu.com"
+        class="group bg-white rounded-2xl p-6 border border-brand-100 hover:shadow-md transition-all"
+      >
+        <div class="w-10 h-10 rounded-lg bg-brand-100 flex items-center justify-center mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-brand-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <h2 class="font-serif text-xl text-brand-900 mb-1 group-hover:text-brand-600">E-mail</h2>
+        <p class="text-brand-700">kuba@artewu.com</p>
+      </a>
+
+      <a
+        href="tel:+420608179251"
+        class="group bg-white rounded-2xl p-6 border border-brand-100 hover:shadow-md transition-all"
+      >
+        <div class="w-10 h-10 rounded-lg bg-brand-100 flex items-center justify-center mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-brand-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.95.68l1.49 4.48a1 1 0 01-.5 1.21l-1.96.98a11 11 0 005.5 5.5l.98-1.96a1 1 0 011.21-.5l4.48 1.49a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z" />
+          </svg>
+        </div>
+        <h2 class="font-serif text-xl text-brand-900 mb-1 group-hover:text-brand-600">Telefon</h2>
+        <p class="text-brand-700">608 179 251</p>
+      </a>
+    </div>
+
+    <div class="mt-10 grid gap-6 md:grid-cols-2">
+      <div class="bg-white rounded-2xl p-6 border border-brand-100">
+        <h2 class="font-serif text-xl text-brand-900 mb-4">Kontaktní osoba</h2>
+        <p class="text-brand-700 mb-1"><strong class="text-brand-900">Jakub Černý</strong></p>
+        <p class="text-brand-700 text-sm">Jednatel a&nbsp;první kontakt pro&nbsp;všechny zakázky.</p>
+      </div>
+
+      <div class="bg-white rounded-2xl p-6 border border-brand-100">
+        <h2 class="font-serif text-xl text-brand-900 mb-4">Sídlo a fakturační údaje</h2>
+        <ul class="text-brand-700 text-sm space-y-1.5">
+          <li><strong class="text-brand-900">Artewu s.r.o.</strong></li>
+          <li>Druztová 187, 330 07 Druztová</li>
+          <li>IČO: 14447045</li>
+          <li>Bankovní spojení: 2102189616/2010</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-10 bg-brand-800 rounded-2xl p-8 text-white">
+      <h2 class="font-serif text-2xl mb-3">Jak nás najdete</h2>
+      <p class="text-brand-200 leading-relaxed">
+        Naše dílna sídlí v&nbsp;Druztové asi 15&nbsp;minut autem z&nbsp;Plzně.
+        </p>
+        <p class="text-brand-200 leading-relaxed">
+        Schůzku si rádi domluvíme i&nbsp;u&nbsp;vás, ale nejprve nám zavolejte, ať se domluvíme na předběžné kapacitě
+        a termínech.
+      </p>
+    </div>
+  </section>
+</Layout>

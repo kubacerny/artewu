@@ -1,0 +1,108 @@
+---
+import Layout from '../layouts/Layout.astro';
+import BlogCard from '../components/BlogCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => data.category === 'truhlarstvi'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 6);
+---
+
+<Layout title="Truhlářství — Artewu s.r.o.">
+  <!-- Hero -->
+  <section class="relative bg-gradient-to-br from-brand-100 via-brand-50 to-white">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24">
+      <div class="max-w-3xl">
+        <p class="text-sm font-medium tracking-wider uppercase text-brand-600 mb-3">Truhlářství</p>
+        <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-brand-900 leading-tight mb-5">
+          Nábytek, který přežije generace.
+        </h1>
+        <p class="text-lg text-brand-800 leading-relaxed">
+          Vyrábíme kuchyně, vestavěné skříně, stoly a&nbsp;interiérové prvky
+          přesně na míru vašemu prostoru. Pracujeme s&nbsp;masivem, dýhou
+          i&nbsp;moderními kompozity — a&nbsp;vždy poctivě.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Co nabízíme -->
+  <section class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+    <h2 class="font-serif text-3xl text-brand-900 mb-10 text-center">Co u nás objednáte</h2>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {[
+        {
+          title: 'Kuchyně na míru',
+          desc: 'Od první skici po finální montáž a&nbsp;servis. Spolupracujeme s předními výrobci spotřebičů a kování.',
+        },
+        {
+          title: 'Vestavěné skříně',
+          desc: 'Šatny, garderoby a&nbsp;skříně do&nbsp;atypických prostor — i&nbsp;pod šikmé stropy a do nik.',
+        },
+        {
+          title: 'Stoly a sedací nábytek',
+          desc: 'Jídelní, konferenční i&nbsp;pracovní stoly. Masivní desky, kovové podnože svařené v&nbsp;dílně.',
+        },
+        {
+          title: 'Interiérové dveře a obklady',
+          desc: 'Atypické dveře, dřevěné stěny, akustické obklady. Návrh i&nbsp;realizace pod jednou střechou.',
+        },
+        {
+          title: 'Komerční interiéry',
+          desc: 'Vybavení kanceláří, kaváren a&nbsp;ordinací. Důraz na&nbsp;trvanlivost a&nbsp;reprezentativní vzhled.',
+        },
+        {
+          title: 'Servis a renovace',
+          desc: 'Postaráme se i&nbsp;o&nbsp;starší nábytek — výměna kování, broušení a&nbsp;nové olejování.',
+        },
+      ].map((item) => (
+        <div class="bg-white rounded-2xl p-6 border border-brand-100 hover:shadow-md transition-shadow">
+          <h3 class="font-serif text-xl text-brand-900 mb-2" set:html={item.title} />
+          <p class="text-brand-700 leading-relaxed text-sm" set:html={item.desc} />
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Postup -->
+  <section class="bg-brand-100/40 py-16 sm:py-20">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <h2 class="font-serif text-3xl text-brand-900 mb-10 text-center">Jak spolupráce probíhá</h2>
+      <ol class="grid gap-6 md:grid-cols-4">
+        {[
+          ['01', 'Konzultace', 'Sejdeme se u vás nebo v dílně, probereme záměr, prostor a rozpočet.'],
+          ['02', 'Návrh a cenovka', 'Připravíme vizualizaci a transparentní rozpočet. Bezplatně.'],
+          ['03', 'Výroba', 'Vyrobíme v naší dílně v Druztové. Průběžně sdílíme fotky.'],
+          ['04', 'Montáž a servis', 'Dovezeme, namontujeme a jsme k dispozici i po předání.'],
+        ].map(([num, title, desc]) => (
+          <li class="bg-white rounded-2xl p-6 border border-brand-100">
+            <div class="text-3xl font-serif text-brand-400 mb-2">{num}</div>
+            <h3 class="font-serif text-lg text-brand-900 mb-2">{title}</h3>
+            <p class="text-sm text-brand-700 leading-relaxed">{desc}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Vybrané realizace -->
+  <section class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+    <div class="flex items-end justify-between mb-10">
+      <h2 class="font-serif text-3xl text-brand-900">Vybrané realizace</h2>
+      <a href="/blog" class="text-brand-600 hover:text-brand-800 font-medium">Všechny →</a>
+    </div>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {posts.map((post) => (
+        <BlogCard
+          href={`/blog/${post.id}`}
+          title={post.data.title}
+          description={post.data.description}
+          date={post.data.date}
+          category={post.data.category}
+          cover={post.data.cover}
+        />
+      ))}
+    </div>
+  </section>
+</Layout>

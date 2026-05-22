@@ -1,0 +1,106 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const tabs = [
+  { key: 'all', label: 'Vše', count: posts.length },
+  {
+    key: 'truhlarstvi',
+    label: 'Truhlářství',
+    count: posts.filter((p) => p.data.category === 'truhlarstvi').length,
+  },
+  {
+    key: 'software',
+    label: 'Vývoj software',
+    count: posts.filter((p) => p.data.category === 'software').length,
+  },
+];
+---
+
+<Layout title="Realizace — Artewu s.r.o.">
+  <section class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+    <header class="max-w-2xl mb-10">
+      <p class="text-sm font-medium tracking-wider uppercase text-brand-600 mb-3">Realizace</p>
+      <h1 class="font-serif text-4xl sm:text-5xl text-brand-900 mb-4">Naše práce</h1>
+      <p class="text-lg text-brand-700 leading-relaxed">
+        Ukázky realizací z&nbsp;truhlářské dílny i&nbsp;ze&nbsp;světa software.
+        Každý příspěvek obsahuje pár fotek a&nbsp;popis, jak jsme to řešili.
+      </p>
+    </header>
+
+    <div
+      role="tablist"
+      aria-label="Filtr realizací"
+      class="flex flex-wrap gap-2 mb-10 border-b border-brand-200 pb-4"
+      data-filter-tabs
+    >
+      {tabs.map((tab, i) => (
+        <button
+          type="button"
+          role="tab"
+          data-filter={tab.key}
+          data-active={i === 0 ? 'true' : 'false'}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          class="px-4 py-2 rounded-full text-sm font-medium transition-colors data-[active=true]:bg-brand-800 data-[active=true]:text-white data-[active=false]:text-brand-700 data-[active=false]:hover:bg-brand-100"
+        >
+          {tab.label}
+          <span class="ml-1.5 text-xs opacity-70">({tab.count})</span>
+        </button>
+      ))}
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-filter-grid>
+      {posts.map((post) => (
+        <div data-category={post.data.category}>
+          <BlogCard
+            href={`/blog/${post.id}`}
+            title={post.data.title}
+            description={post.data.description}
+            date={post.data.date}
+            category={post.data.category}
+            cover={post.data.cover}
+          />
+        </div>
+      ))}
+    </div>
+
+    <p class="hidden text-center text-brand-600 py-12" data-filter-empty>
+      V&nbsp;této kategorii zatím nic není.
+    </p>
+  </section>
+</Layout>
+
+<script>
+  const tabsEl = document.querySelector<HTMLElement>('[data-filter-tabs]');
+  const grid = document.querySelector<HTMLElement>('[data-filter-grid]');
+  const emptyEl = document.querySelector<HTMLElement>('[data-filter-empty]');
+  if (tabsEl && grid && emptyEl) {
+    const cards = Array.from(grid.querySelectorAll<HTMLElement>('[data-category]'));
+
+    const applyFilter = (key: string) => {
+      let visible = 0;
+      cards.forEach((card) => {
+        const match = key === 'all' || card.dataset.category === key;
+        card.hidden = !match;
+        if (match) visible++;
+      });
+      emptyEl.classList.toggle('hidden', visible > 0);
+    };
+
+    tabsEl.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        tabsEl.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((b) => {
+          const active = b === btn;
+          b.dataset.active = active ? 'true' : 'false';
+          b.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        applyFilter(btn.dataset.filter ?? 'all');
+      });
+    });
+  }
+</script>
