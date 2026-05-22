@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection, render } from 'astro:content';
+import { imgSrc } from '../../lib/img';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -12,6 +13,8 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+const coverUrl = imgSrc(post.data.cover);
+const galleryUrls = (post.data.gallery ?? []).map((g) => imgSrc(g)).filter(Boolean) as string[];
 
 const categoryLabel = post.data.category === 'truhlarstvi' ? 'Truhlářství' : 'Software';
 const categoryHref = post.data.category === 'truhlarstvi' ? '/truhlarstvi' : '/vyvoj-software';
@@ -24,9 +27,9 @@ const formattedDate = new Intl.DateTimeFormat('cs-CZ', {
 
 <Layout title={`${post.data.title} — Artewu s.r.o.`} description={post.data.description}>
   <article>
-    {post.data.cover && (
+    {coverUrl && (
       <div class="w-full aspect-[21/9] sm:aspect-[21/8] overflow-hidden bg-brand-100">
-        <img src={post.data.cover} alt={post.data.title} class="w-full h-full object-cover" />
+        <img src={coverUrl} alt={post.data.title} class="w-full h-full object-cover" />
       </div>
     )}
 
@@ -54,11 +57,11 @@ const formattedDate = new Intl.DateTimeFormat('cs-CZ', {
         <Content />
       </div>
 
-      {post.data.gallery && post.data.gallery.length > 0 && (
+      {galleryUrls.length > 0 && (
         <section class="mt-12">
           <h2 class="font-serif text-2xl text-brand-900 mb-5">Galerie</h2>
           <div class="grid gap-4 sm:grid-cols-2">
-            {post.data.gallery.map((src) => (
+            {galleryUrls.map((src) => (
               <img src={src} alt="" loading="lazy" class="rounded-xl shadow-sm w-full" />
             ))}
           </div>
