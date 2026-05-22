@@ -4,14 +4,26 @@ import { getCollection, render } from 'astro:content';
 import { imgSrc } from '../../lib/img';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  return posts.map((post) => ({
-    params: { slug: post.id },
-    props: { post },
-  }));
+  const allPosts = await getCollection('blog');
+  // Sort descending by date — newest first
+  const sorted = [...allPosts].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+  return sorted.map((post) => {
+    // Neighbors within the same category only
+    const catPosts = sorted.filter((p) => p.data.category === post.data.category);
+    const idx = catPosts.findIndex((p) => p.id === post.id);
+    return {
+      params: { slug: post.id },
+      props: {
+        post,
+        newerPost: catPosts[idx - 1] ?? null,  // lower index = newer (desc sort)
+        olderPost: catPosts[idx + 1] ?? null,  // higher index = older
+      },
+    };
+  });
 }
 
-const { post } = Astro.props;
+const { post, newerPost, olderPost } = Astro.props;
 const { Content } = await render(post);
 const coverUrl = imgSrc(post.data.cover);
 const galleryUrls = (post.data.gallery ?? []).map((g) => imgSrc(g)).filter(Boolean) as string[];
@@ -26,6 +38,28 @@ const formattedDate = new Intl.DateTimeFormat('cs-CZ', {
 ---
 
 <Layout title={`${post.data.title} — Artewu s.r.o.`} description={post.data.description}>
+  {/* Fixed edge arrows — left = newer, right = older */}
+  {newerPost && (
+    <a
+      id="nav-newer"
+      href={`/blog/${newerPost.id}`}
+      aria-label={`Novější: ${newerPost.data.title}`}
+      class="fixed left-0 top-1/2 -translate-y-1/2 z-40 hidden sm:flex items-center justify-center w-12 h-20 bg-white/80 hover:bg-white shadow-md rounded-r-2xl text-brand-700 hover:text-brand-900 transition-all opacity-0 hover:opacity-100 focus:opacity-100"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><polyline points="15 18 9 12 15 6"/></svg>
+    </a>
+  )}
+  {olderPost && (
+    <a
+      id="nav-older"
+      href={`/blog/${olderPost.id}`}
+      aria-label={`Starší: ${olderPost.data.title}`}
+      class="fixed right-0 top-1/2 -translate-y-1/2 z-40 hidden sm:flex items-center justify-center w-12 h-20 bg-white/80 hover:bg-white shadow-md rounded-l-2xl text-brand-700 hover:text-brand-900 transition-all opacity-0 hover:opacity-100 focus:opacity-100"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><polyline points="9 18 15 12 9 6"/></svg>
+    </a>
+  )}
+
   <article>
     {coverUrl && (
       <div class="w-full aspect-[21/9] sm:aspect-[21/8] overflow-hidden bg-brand-100">
@@ -68,14 +102,57 @@ const formattedDate = new Intl.DateTimeFormat('cs-CZ', {
         </section>
       )}
 
-      <div class="mt-16 pt-8 border-t border-brand-200 flex items-center justify-between">
-        <a href="/blog" class="text-brand-600 hover:text-brand-800 font-medium">
-          ← Zpět na realizace
-        </a>
-        <a href="/kontakt" class="text-brand-600 hover:text-brand-800 font-medium">
-          Kontakt →
-        </a>
+      {/* Bottom newer/older navigation */}
+      <div class="mt-16 pt-8 border-t border-brand-200 grid grid-cols-3 items-center gap-4 text-sm">
+        <div class="text-left">
+          {newerPost ? (
+            <a href={`/blog/${newerPost.id}`} class="group flex flex-col gap-1 text-brand-600 hover:text-brand-900">
+              <span class="text-xs text-brand-400 group-hover:text-brand-600">← Novější</span>
+              <span class="font-medium line-clamp-2">{newerPost.data.title}</span>
+            </a>
+          ) : <span />}
+        </div>
+        <div class="text-center">
+          <a href="/blog" class="text-brand-500 hover:text-brand-800 font-medium">Realizace</a>
+        </div>
+        <div class="text-right">
+          {olderPost ? (
+            <a href={`/blog/${olderPost.id}`} class="group flex flex-col gap-1 text-brand-600 hover:text-brand-900">
+              <span class="text-xs text-brand-400 group-hover:text-brand-600">Starší →</span>
+              <span class="font-medium line-clamp-2">{olderPost.data.title}</span>
+            </a>
+          ) : <span />}
+        </div>
       </div>
     </div>
   </article>
 </Layout>
+
+<script define:vars={{ newerUrl: newerPost ? `/blog/${newerPost.id}` : null, olderUrl: olderPost ? `/blog/${olderPost.id}` : null }}>
+  // ArrowLeft = newer (back toward present), ArrowRight = older (deeper into past)
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft'  && newerUrl) location.href = newerUrl;
+    if (e.key === 'ArrowRight' && olderUrl) location.href = olderUrl;
+  });
+
+  // Show edge arrows on first mouse movement
+  const elNewer = document.getElementById('nav-newer');
+  const elOlder = document.getElementById('nav-older');
+  document.addEventListener('mousemove', () => {
+    if (elNewer) elNewer.style.opacity = '1';
+    if (elOlder) elOlder.style.opacity = '1';
+  }, { once: true });
+
+  // Swipe left = older (going through history), swipe right = newer (going back)
+  let touchStartX = 0;
+  document.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+
+  document.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const threshold = 60;
+    if (dx < -threshold && olderUrl) location.href = olderUrl; // swipe left  → older
+    if (dx >  threshold && newerUrl) location.href = newerUrl; // swipe right → newer
+  }, { passive: true });
+</script>

@@ -69,13 +69,22 @@ title: "Kuchyňská linka z masivního dubu"
 description: "Krátký popis pod nadpis, do náhledové karty i meta description."
 date: 2025-09-15
 category: "truhlarstvi"        # "truhlarstvi" | "software"
-cover: "https://.../foto.jpg"  # nebo cesta k obrázku, volitelné
+cover: ./photo-01.jpg          # lokální obrázek (vedle index.mdx) NEBO URL
 gallery:                       # volitelné, ukáže se dole jako galerie
-  - "https://.../foto-1.jpg"
-  - "https://.../foto-2.jpg"
+  - ./photo-01.jpg
+  - ./photo-02.jpg
 tags: ["kuchyně", "dub"]       # volitelné
 ---
 ```
+
+`cover` a položky v `gallery` můžou být buď **relativní cesta** na obrázek
+vedle `index.mdx` (`./photo-01.jpg`) — Astro je sám zoptimalizuje a hashne —
+nebo **absolutní URL** na externí obrázek (`https://…`).
+
+> 💡 Velké fotky z telefonu před commitem zmenši skriptem
+> [`bin/process-photos.mjs`](bin/process-photos.mjs) (resize na 1800 px,
+> auto-rotace dle EXIF, JPEG 82). Stačí složku s originály dát do
+> `src/tmp_realizace_photos/<slug>/` a spustit `node bin/process-photos.mjs`.
 
 Nový příspěvek se sám objeví na `/blog`, ve filtru podle kategorie a v sekci „Vybrané realizace" na příslušné rozcestníkové stránce (`/truhlarstvi`, `/vyvoj-software`) i na homepage (3 nejnovější).
 

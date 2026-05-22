@@ -11,6 +11,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "deploy": "bash bin/deploy.sh",
+    "process-photos": "node bin/process-photos.mjs",
     "clean": "rm -rf node_modules dist .astro pnpm-lock.yaml"
   },
   "dependencies": {
