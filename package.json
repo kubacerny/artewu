@@ -10,7 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "deploy": "bash bin/deploy.sh"
+    "deploy": "bash bin/deploy.sh",
+    "clean": "rm -rf node_modules dist .astro pnpm-lock.yaml"
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.6",
