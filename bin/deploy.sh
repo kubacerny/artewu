@@ -84,11 +84,15 @@ trap 'rm -f "${TMP_CONFIG}"' EXIT
 
 sed "s|__WEBROOT__|${WEBROOT}|g" "${SOURCE_CONFIG}" > "${TMP_CONFIG}"
 
-# Záloha předchozí verze, pokud existuje a je odlišná
-if [[ -f "${TARGET_CONFIG}" ]] && ! cmp -s "${TARGET_CONFIG}" "${TMP_CONFIG}"; then
-    BACKUP="${TARGET_CONFIG}.bak.$(date +%Y%m%d-%H%M%S)"
-    cp -p "${TARGET_CONFIG}" "${BACKUP}"
-    log "Záloha předchozí konfigurace: ${BACKUP}"
+# Přepis existující konfigurace (s varováním a zálohou)
+if [[ -f "${TARGET_CONFIG}" ]]; then
+    if cmp -s "${TARGET_CONFIG}" "${TMP_CONFIG}"; then
+        log "Konfigurace je beze změny, přepisování přeskočeno."
+    else
+        BACKUP="${TARGET_CONFIG}.bak.$(date +%Y%m%d-%H%M%S)"
+        cp -p "${TARGET_CONFIG}" "${BACKUP}"
+        warn "Existující konfigurace přepsána. Záloha: ${BACKUP}"
+    fi
 fi
 
 install -m 0644 "${TMP_CONFIG}" "${TARGET_CONFIG}"
