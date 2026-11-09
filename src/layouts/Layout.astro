@@ -1,4 +1,5 @@
 ---
+import { GTM_ID } from 'astro:env/client';
 import '../styles/global.css';
 import Header from '../components/Header.tsx';
 import Footer from '../components/Footer.astro';
@@ -19,6 +20,20 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Google tag (gtag.js) -->
+    {
+      GTM_ID && (
+        <Fragment>
+          <script is:inline async src={`https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`} />
+          <script is:inline define:vars={{ GTM_ID }}>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', GTM_ID);
+          </script>
+        </Fragment>
+      )
+    }
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
