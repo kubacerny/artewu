@@ -44,17 +44,20 @@ Příspěvky leží v **`src/content/blog/`** jako MDX. Schema je v [src/content
 Podporujeme dva tvary — funguje obojí, slug v URL je stejný:
 
 **A) Krátký post bez vlastních příloh** — jediný soubor:
-```
+
+```text
 src/content/blog/nazev-prispevku.mdx
 ```
 
 **B) Post s vlastními obrázky** — vlastní složka (doporučeno):
-```
+
+```text
 src/content/blog/nazev-prispevku/
 ├── index.mdx
 ├── detail-1.jpg
 └── detail-2.jpg
 ```
+
 V MDX se na lokální obrázky odkážeš relativně:
 
 ```mdx
