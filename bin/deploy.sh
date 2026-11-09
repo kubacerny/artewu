@@ -97,6 +97,16 @@ fi
 
 install -m 0644 "${TMP_CONFIG}" "${TARGET_CONFIG}"
 
+# Globální ServerName pro Apache (potlačí hlášku AH00558)
+if [[ "${SERVER}" == "apache" ]]; then
+    SERVERNAME_CONF="/etc/apache2/conf-available/servername.conf"
+    if ! grep -rqsiE '^\s*ServerName\b' /etc/apache2/apache2.conf /etc/apache2/conf-enabled/; then
+        log "Globální ServerName není nastaven — vytvářím ${SERVERNAME_CONF}..."
+        printf 'ServerName %s\n' "${SITE}" > "${SERVERNAME_CONF}"
+        a2enconf -q servername
+    fi
+fi
+
 # Symlink do sites-enabled
 if [[ -L "${ENABLED_LINK}" ]] || [[ -e "${ENABLED_LINK}" ]]; then
     rm -f "${ENABLED_LINK}"
