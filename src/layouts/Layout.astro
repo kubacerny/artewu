@@ -13,6 +13,8 @@ const {
   title = 'Artewu s.r.o. — truhlářství a vývoj software',
   description = 'Artewu s.r.o. — kvalitní truhlářská výroba na míru a vývoj software z Druztové u Plzně.',
 } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
@@ -64,6 +66,7 @@ const {
     </noscript>
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
     <title>{title}</title>
   </head>
   <body class="min-h-screen flex flex-col">
