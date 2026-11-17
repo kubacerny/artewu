@@ -8,21 +8,55 @@ const posts = (await getCollection('blog', ({ data }) => data.category === 'truh
   .slice(0, 6);
 ---
 
-<Layout title="Truhlářství — Artewu s.r.o.">
+<Layout
+  title="Truhlářství Plzeň – nábytek z masivu na míru | Artewu"
+  description="Truhlářství pro Plzeň a okolí. Vyrábíme nábytek z masivu, kuchyně, stoly, vestavěné skříně a další interiérové prvky na míru."
+>
   <!-- Hero -->
   <section class="relative bg-gradient-to-br from-brand-100 via-brand-50 to-white">
     <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24">
       <div class="max-w-3xl">
-        <p class="text-sm font-medium tracking-wider uppercase text-brand-600 mb-3">Truhlářství</p>
+        <p class="text-sm font-medium tracking-wider uppercase text-brand-600 mb-3">Truhlářství Plzeň</p>
         <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-brand-900 leading-tight mb-5">
-          Nábytek, který přežije generace.
+          Nábytek z&nbsp;masivu na&nbsp;míru pro Plzeň a&nbsp;okolí.
         </h1>
         <p class="text-lg text-brand-800 leading-relaxed">
           Vyrábíme kuchyně, vestavěné skříně, stoly a&nbsp;interiérové prvky
-          přesně na míru vašemu prostoru. Pracujeme s&nbsp;masivem, dýhou
-          i&nbsp;moderními kompozity — a&nbsp;vždy poctivě.
+          přesně na míru vašemu prostoru. V&nbsp;dílně v&nbsp;Druztové u&nbsp;Plzně
+          pracujeme s&nbsp;masivem, dýhou i&nbsp;moderními kompozity — a&nbsp;vždy poctivě.
         </p>
       </div>
+    </div>
+  </section>
+
+  <!-- Nábytek z masivu -->
+  <section class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20">
+    <div class="grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-start">
+      <div>
+        <p class="text-sm font-medium tracking-wider uppercase text-brand-600 mb-3">Masivní dřevo</p>
+        <h2 class="font-serif text-3xl sm:text-4xl text-brand-900 mb-5">
+          Truhlářská výroba z&nbsp;masivu
+        </h2>
+        <p class="text-brand-700 leading-relaxed mb-4">
+          Masiv vybíráme podle účelu výrobku, namáhání a&nbsp;požadovaného vzhledu.
+          Pracujeme například s&nbsp;dubem, jasanem a&nbsp;ořechem. Kresbu dřeva
+          necháváme vyniknout a&nbsp;povrch upravujeme s&nbsp;ohledem na každodenní používání.
+        </p>
+        <p class="text-brand-700 leading-relaxed">
+          Každou zakázku nejprve zaměříme, navrhneme vhodnou konstrukci a&nbsp;materiál
+          a&nbsp;poté vyrobíme v&nbsp;naší dílně. Hotový nábytek dovezeme a&nbsp;namontujeme
+          zákazníkům v&nbsp;Plzni a&nbsp;okolí.
+        </p>
+      </div>
+      <aside class="bg-brand-100/60 rounded-2xl p-6 sm:p-8">
+        <h3 class="font-serif text-2xl text-brand-900 mb-4">Proč zvolit masiv</h3>
+        <ul class="space-y-3 text-brand-700">
+          <li>• dlouhá životnost a&nbsp;možnost renovace</li>
+          <li>• jedinečná kresba každého kusu dřeva</li>
+          <li>• konstrukce navržená přesně pro konkrétní prostor</li>
+          <li>• osobní domluva od návrhu až po montáž</li>
+        </ul>
+      </aside>
     </div>
   </section>
 
@@ -83,6 +117,42 @@ const posts = (await getCollection('blog', ({ data }) => data.category === 'truh
           </li>
         ))}
       </ol>
+    </div>
+  </section>
+
+  <!-- Časté otázky -->
+  <section class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+    <div class="text-center mb-10">
+      <p class="text-sm font-medium tracking-wider uppercase text-brand-600 mb-3">Časté otázky</p>
+      <h2 class="font-serif text-3xl text-brand-900">Truhlářství v&nbsp;Plzni a&nbsp;okolí</h2>
+    </div>
+    <div class="space-y-4">
+      {[
+        {
+          question: 'Vyrábíte nábytek z masivu?',
+          answer: 'Ano. Podle typu výrobku pracujeme například s dubem, jasanem nebo ořechem. Vhodnou dřevinu, konstrukci a povrchovou úpravu doporučíme podle způsobu používání a požadovaného vzhledu.',
+        },
+        {
+          question: 'Realizujete zakázky přímo v Plzni?',
+          answer: 'Ano. Dílna sídlí v Druztové přibližně 15 minut autem z Plzně. Za zákazníky v Plzni a okolí jezdíme na zaměření i následnou montáž.',
+        },
+        {
+          question: 'Jaký nábytek vyrábíte na míru?',
+          answer: 'Vyrábíme kuchyně, vestavěné skříně, stoly, sedací nábytek, interiérové dveře, obklady, schodiště i další atypické interiérové prvky.',
+        },
+        {
+          question: 'Jak probíhá objednávka?',
+          answer: 'Nejprve probereme záměr, prostor a rozpočet. Následuje zaměření, návrh řešení a cenová nabídka. Po odsouhlasení zakázku vyrobíme, dovezeme a namontujeme.',
+        },
+      ].map((item) => (
+        <details class="group bg-white rounded-2xl border border-brand-100 p-6">
+          <summary class="cursor-pointer list-none font-serif text-xl text-brand-900 flex items-center justify-between gap-4">
+            {item.question}
+            <span aria-hidden class="text-brand-500 group-open:rotate-45 transition-transform">+</span>
+          </summary>
+          <p class="mt-4 text-brand-700 leading-relaxed">{item.answer}</p>
+        </details>
+      ))}
     </div>
   </section>
 

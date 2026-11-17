@@ -10,11 +10,61 @@ interface Props {
 }
 
 const {
-  title = 'Artewu s.r.o. — truhlářství',
-  description = 'Artewu s.r.o. — kvalitní truhlářská výroba na míru z Druztové u Plzně.',
+  title = 'Truhlářství Plzeň – nábytek z masivu na míru | Artewu',
+  description = 'Zakázkové truhlářství pro Plzeň a okolí. Vyrábíme nábytek z masivu, kuchyně, stoly, vestavěné skříně a interiérové prvky na míru.',
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const localBusiness = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': 'https://artewu.com/#business',
+  name: 'Artewu s.r.o.',
+  url: 'https://artewu.com',
+  telephone: '+420608179251',
+  email: 'kuba@artewu.com',
+  description:
+    'Zakázkové truhlářství a výroba nábytku z masivu pro zákazníky z Plzně a okolí.',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Druztová 187',
+    postalCode: '330 07',
+    addressLocality: 'Druztová',
+    addressRegion: 'Plzeňský kraj',
+    addressCountry: 'CZ',
+  },
+  areaServed: [
+    { '@type': 'City', name: 'Plzeň' },
+    { '@type': 'AdministrativeArea', name: 'Plzeň-sever' },
+    { '@type': 'Place', name: 'Druztová' },
+  ],
+  knowsAbout: [
+    'nábytek z masivu',
+    'nábytek na míru',
+    'kuchyně na míru',
+    'vestavěné skříně',
+    'jídelní stoly',
+    'dřevěná schodiště',
+  ],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Truhlářské služby',
+    itemListElement: [
+      'Nábytek z masivu na míru',
+      'Kuchyně na míru',
+      'Vestavěné skříně',
+      'Stoly a sedací nábytek',
+      'Interiérové dveře a obklady',
+    ].map((name) => ({
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name,
+        areaServed: 'Plzeň a okolí',
+      },
+    })),
+  },
+};
 ---
 
 <!doctype html>
@@ -67,6 +117,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="cs_CZ" />
+    <meta property="og:site_name" content="Artewu s.r.o." />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <script type="application/ld+json" set:html={JSON.stringify(localBusiness)} />
     <title>{title}</title>
   </head>
   <body class="min-h-screen flex flex-col">
