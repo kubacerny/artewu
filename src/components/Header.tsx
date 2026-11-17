@@ -5,7 +5,6 @@ type NavItem = { href: string; label: string };
 const NAV: NavItem[] = [
   { href: '/', label: 'Úvod' },
   { href: '/truhlarstvi', label: 'Truhlářství' },
-  { href: '/vyvoj-software', label: 'Vývoj software' },
   { href: '/blog', label: 'Realizace' },
   { href: '/kontakt', label: 'Kontakt' },
 ];

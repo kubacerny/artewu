@@ -15,7 +15,7 @@ const blog = defineCollection({
       title: z.string(),
       description: z.string(),
       date: z.coerce.date(),
-      category: z.enum(['truhlarstvi', 'software']),
+      category: z.literal('truhlarstvi'),
       // Buď lokální obrázek (vedle index.mdx, relativní cesta `./photo.jpg`),
       // nebo absolutní URL na externí obrázek.
       cover: z.union([image(), z.string().url()]).optional(),

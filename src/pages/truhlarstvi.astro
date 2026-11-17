@@ -99,7 +99,6 @@ const posts = (await getCollection('blog', ({ data }) => data.category === 'truh
           title={post.data.title}
           description={post.data.description}
           date={post.data.date}
-          category={post.data.category}
           cover={post.data.cover}
         />
       ))}

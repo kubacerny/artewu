@@ -1,6 +1,6 @@
 # Artewu s.r.o. — web
 
-Firemní web Artewu s.r.o. — truhlářství a vývoj software. Postavený na **Astro 6 + React 19 + Tailwind v4 + MDX**.
+Firemní web Artewu s.r.o. zaměřený na truhlářskou výrobu. Postavený na **Astro 6 + React 19 + Tailwind v4 + MDX**.
 
 ## 📁 Struktura projektu
 
@@ -26,10 +26,9 @@ Firemní web Artewu s.r.o. — truhlářství a vývoj software. Postavený na *
 │   ├── pages/
 │   │   ├── index.astro           # úvodní stránka
 │   │   ├── truhlarstvi.astro
-│   │   ├── vyvoj-software.astro
 │   │   ├── kontakt.astro
 │   │   └── blog/
-│   │       ├── index.astro       # výpis realizací s filtrem
+│   │       ├── index.astro       # výpis realizací
 │   │       └── [...slug].astro   # detail příspěvku
 │   └── styles/global.css         # Tailwind v4 + brand theme
 ├── astro.config.mjs
@@ -71,7 +70,7 @@ V MDX se na lokální obrázky odkážeš relativně:
 title: "Kuchyňská linka z masivního dubu"
 description: "Krátký popis pod nadpis, do náhledové karty i meta description."
 date: 2025-09-15
-category: "truhlarstvi"        # "truhlarstvi" | "software"
+category: "truhlarstvi"
 cover: ./photo-01.jpg          # lokální obrázek (vedle index.mdx) NEBO URL
 gallery:                       # volitelné, ukáže se dole jako galerie
   - ./photo-01.jpg
@@ -89,7 +88,7 @@ nebo **absolutní URL** na externí obrázek (`https://…`).
 > auto-rotace dle EXIF, JPEG 82). Stačí složku s originály dát do
 > `src/tmp_realizace_photos/<slug>/` a spustit `node bin/process-photos.mjs`.
 
-Nový příspěvek se sám objeví na `/blog`, ve filtru podle kategorie a v sekci „Vybrané realizace" na příslušné rozcestníkové stránce (`/truhlarstvi`, `/vyvoj-software`) i na homepage (3 nejnovější).
+Nový příspěvek se sám objeví na `/blog`, v sekci „Vybrané realizace" na `/truhlarstvi` i na homepage (3 nejnovější).
 
 ## 🧞 Příkazy
 

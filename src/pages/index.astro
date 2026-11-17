@@ -19,13 +19,12 @@ const latest = posts.slice(0, 3);
           Artewu s.r.o. — Druztová u Plzně
         </p>
         <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-semibold text-brand-900 leading-tight mb-6">
-          Řemeslo, které drží.<br />
-          <span class="text-brand-600">Software, který funguje.</span>
+          Nábytek na míru.<br />
+          <span class="text-brand-600">Řemeslo, které drží.</span>
         </h1>
         <p class="text-lg sm:text-xl text-brand-800 leading-relaxed mb-8 max-w-2xl">
-          Vyrábíme nábytek na míru a vyvíjíme webové aplikace.
-          Spojuje nás důraz na detail, poctivost a&nbsp;věci, které mají
-          přežít víc než jednu sezónu.
+          Vyrábíme kuchyně, vestavěné skříně, stoly a&nbsp;další interiérové prvky.
+          Zakládáme si na detailu, poctivosti a&nbsp;věcech, které mají přežít víc než jednu sezónu.
         </p>
         <div class="flex flex-wrap gap-4">
           <a
@@ -33,13 +32,6 @@ const latest = posts.slice(0, 3);
             class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-brand-700 text-white font-medium hover:bg-brand-800 transition-colors"
           >
             Truhlářská výroba
-            <span aria-hidden>→</span>
-          </a>
-          <a
-            href="/vyvoj-software"
-            class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-brand-800 font-medium border border-brand-200 hover:bg-brand-100 transition-colors"
-          >
-            Vývoj software
             <span aria-hidden>→</span>
           </a>
         </div>
@@ -50,13 +42,13 @@ const latest = posts.slice(0, 3);
   <!-- Co děláme -->
   <section class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
     <div class="text-center max-w-2xl mx-auto mb-12">
-      <h2 class="font-serif text-3xl sm:text-4xl text-brand-900 mb-4">Co děláme</h2>
+      <h2 class="font-serif text-3xl sm:text-4xl text-brand-900 mb-4">Zakázková výroba</h2>
       <p class="text-brand-700 leading-relaxed">
-        Dvě odlišné disciplíny, jeden přístup — pečlivá práce a&nbsp;dlouhodobé vztahy s&nbsp;klienty.
+        Pečlivá práce, kvalitní materiály a&nbsp;dlouhodobé vztahy s&nbsp;klienty.
       </p>
     </div>
 
-    <div class="grid gap-8 md:grid-cols-2">
+    <div class="max-w-2xl mx-auto">
       <article class="bg-white rounded-2xl p-8 border border-brand-100 hover:shadow-lg transition-shadow">
         <div class="w-12 h-12 rounded-xl bg-brand-100 flex items-center justify-center mb-5">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-brand-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
@@ -73,21 +65,6 @@ const latest = posts.slice(0, 3);
         </a>
       </article>
 
-      <article class="bg-white rounded-2xl p-8 border border-brand-100 hover:shadow-lg transition-shadow">
-        <div class="w-12 h-12 rounded-xl bg-brand-100 flex items-center justify-center mb-5">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-brand-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l-4 3 4 3M16 9l4 3-4 3M14 4l-4 16" />
-          </svg>
-        </div>
-        <h3 class="font-serif text-2xl text-brand-900 mb-3">Vývoj software</h3>
-        <p class="text-brand-700 leading-relaxed mb-5">
-          Webové aplikace, e-shopy a&nbsp;interní portály postavené na moderním stacku.
-          Od&nbsp;návrhu po&nbsp;provoz.
-        </p>
-        <a href="/vyvoj-software" class="inline-flex items-center gap-1 text-brand-600 font-medium hover:text-brand-800">
-          Více o vývoji <span aria-hidden>→</span>
-        </a>
-      </article>
     </div>
   </section>
 
@@ -111,7 +88,6 @@ const latest = posts.slice(0, 3);
             title={post.data.title}
             description={post.data.description}
             date={post.data.date}
-            category={post.data.category}
             cover={post.data.cover}
           />
         ))}
@@ -130,7 +106,7 @@ const latest = posts.slice(0, 3);
     <div class="bg-brand-800 rounded-3xl p-8 sm:p-12 lg:p-16 text-center text-white">
       <h2 class="font-serif text-3xl sm:text-4xl mb-4">Máte záměr? Pojďme se o&nbsp;něm pobavit.</h2>
       <p class="text-brand-200 max-w-2xl mx-auto mb-8 leading-relaxed">
-        Ať už řešíte novou kuchyň, nebo plánujete webovou aplikaci pro&nbsp;svou firmu —
+        Ať už řešíte novou kuchyň, vestavěnou skříň nebo atypický kus nábytku,
         první konzultace je vždy nezávazná.
       </p>
       <a

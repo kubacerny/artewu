@@ -8,16 +8,13 @@ export async function getStaticPaths() {
   // Sort descending by date — newest first
   const sorted = [...allPosts].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-  return sorted.map((post) => {
-    // Neighbors within the same category only
-    const catPosts = sorted.filter((p) => p.data.category === post.data.category);
-    const idx = catPosts.findIndex((p) => p.id === post.id);
+  return sorted.map((post, idx) => {
     return {
       params: { slug: post.id },
       props: {
         post,
-        newerPost: catPosts[idx - 1] ?? null,  // lower index = newer (desc sort)
-        olderPost: catPosts[idx + 1] ?? null,  // higher index = older
+        newerPost: sorted[idx - 1] ?? null,  // lower index = newer (desc sort)
+        olderPost: sorted[idx + 1] ?? null,  // higher index = older
       },
     };
   });
@@ -28,8 +25,6 @@ const { Content } = await render(post);
 const coverUrl = imgSrc(post.data.cover);
 const galleryUrls = (post.data.gallery ?? []).map((g) => imgSrc(g)).filter(Boolean) as string[];
 
-const categoryLabel = post.data.category === 'truhlarstvi' ? 'Truhlářství' : 'Software';
-const categoryHref = post.data.category === 'truhlarstvi' ? '/truhlarstvi' : '/vyvoj-software';
 const formattedDate = new Intl.DateTimeFormat('cs-CZ', {
   day: 'numeric',
   month: 'long',
@@ -71,13 +66,13 @@ const formattedDate = new Intl.DateTimeFormat('cs-CZ', {
       <nav class="text-sm text-brand-600 mb-6">
         <a href="/blog" class="hover:text-brand-800">Realizace</a>
         <span class="mx-2">/</span>
-        <a href={categoryHref} class="hover:text-brand-800">{categoryLabel}</a>
+        <a href="/truhlarstvi" class="hover:text-brand-800">Truhlářství</a>
       </nav>
 
       <header class="mb-10">
         <div class="flex items-center gap-3 text-sm text-brand-600 mb-4">
           <span class="inline-block px-2.5 py-1 rounded-full bg-brand-100 text-brand-700 font-medium text-xs">
-            {categoryLabel}
+            Truhlářství
           </span>
           <time datetime={post.data.date.toISOString()}>{formattedDate}</time>
         </div>
